@@ -11,15 +11,10 @@ const getAllFinances = asyncHandler(async (req, res, next) => {
     return next(new ApiError("No finance record found", 404));
   }
 
-  const totalAmount = finances.reduce(
-    (acc, finance) => finance.amount + acc,
-    0
-  );
-
   res.json({
     success: true,
     count: finances.length,
-    total: totalAmount,
+    total: finances.reduce((acc, finance) => finance.amount + acc, 0),
     finances,
   });
 });
