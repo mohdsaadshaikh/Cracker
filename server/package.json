@@ -1,0 +1,39 @@
+{
+  "name": "cracker",
+  "version": "1.0.0",
+  "description": "Expense Tracker app",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "SET NODE_ENV=development & nodemon app.js",
+    "start": "SET NODE_ENV=production & node app.js"
+  },
+  "keywords": [
+    "Cracker",
+    "Expense Tracker",
+    "Expense Management",
+    "Finance Tracker"
+  ],
+  "author": "Muhammad Saad Shaikh",
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "bcryptjs": "^2.4.3",
+    "bullmq": "^5.15.0",
+    "cloudinary": "^2.5.0",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-async-handler": "^1.2.0",
+    "express-validator": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^1.4.5-lts.1",
+    "nodemailer": "^6.9.15",
+    "sharp": "^0.33.5",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "prisma": "^5.20.0"
+  }
+}
