@@ -3,20 +3,56 @@ import { prisma } from "../config/dbConnection.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const getAllFinances = asyncHandler(async (req, res, next) => {
+  const { category, type, paymentMethod, recurring } = req.query;
+
+  const filter = {
+    userId: req.user.id,
+  };
+
+  if (category) {
+    filter.category = category;
+  }
+
+  if (type) {
+    filter.type = type;
+  }
+
+  if (paymentMethod) {
+    filter.paymentMethod = paymentMethod;
+  }
+
+  if (recurring) {
+    filter.recurring = recurring === "true";
+  }
+
   const finances = await prisma.finances.findMany({
-    where: { userId: req.user.id },
+    where: filter,
     orderBy: { createdAt: "desc" },
   });
-  if (!finances) {
+
+  if (!finances || finances.length === 0) {
     return next(new ApiError("No finance record found", 404));
   }
 
   res.json({
     success: true,
     count: finances.length,
-    total: finances.reduce((acc, finance) => finance.amount + acc, 0),
+    total: finances
+      .reduce((acc, finance) => finance.amount + acc, 0)
+      .toFixed(2),
     finances,
   });
+});
+
+const getFinanceById = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const finance = await prisma.finances.findUnique({
+    where: { id, userId: req.user.id },
+  });
+  if (!finance) {
+    return next(new ApiError("Finance not found", 404));
+  }
+  res.json({ success: true, finance });
 });
 
 const createFinance = asyncHandler(async (req, res, next) => {
@@ -84,4 +120,10 @@ const deleteFinance = asyncHandler(async (req, res, next) => {
   res.json({ success: true, message: "Finance deleted successfully" });
 });
 
-export { getAllFinances, createFinance, updateFinance, deleteFinance };
+export {
+  getAllFinances,
+  createFinance,
+  updateFinance,
+  deleteFinance,
+  getFinanceById,
+};

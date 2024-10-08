@@ -4,6 +4,7 @@ import {
   createFinance,
   deleteFinance,
   getAllFinances,
+  getFinanceById,
   updateFinance,
 } from "../controllers/finances.controller.js";
 import { createFinanceValidator, validate } from "../libs/validator.js";
@@ -17,6 +18,10 @@ router
   .get(getAllFinances)
   .post(createFinanceValidator(), validate, createFinance);
 
-router.route("/:id").patch(updateFinance).delete(deleteFinance);
+router
+  .route("/:id")
+  .get(getFinanceById)
+  .patch(updateFinance)
+  .delete(deleteFinance);
 
 export default router;
