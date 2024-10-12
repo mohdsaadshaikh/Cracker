@@ -1,3 +1,4 @@
+import { onQueryStarted } from "../../lib/handleApiErr";
 import { baseApi } from "./baseApi";
 
 export const authApi = baseApi.injectEndpoints({
@@ -6,32 +7,39 @@ export const authApi = baseApi.injectEndpoints({
       query: () => ({
         url: "auth/get-my-profile",
       }),
+      onQueryStarted,
+      providesTags: ["Auth"],
     }),
-    register: builder.mutation({
+    registerUser: builder.mutation({
       query: (data) => ({
         url: "auth/register",
         method: "POST",
         body: data,
       }),
+      onQueryStarted,
+      invalidatesTags: ["Auth"],
     }),
-    login: builder.mutation({
+    loginUser: builder.mutation({
       query: (data) => ({
         url: "auth/login",
         method: "POST",
         body: data,
       }),
+      onQueryStarted,
+      invalidatesTags: ["Auth"],
     }),
-    logout: builder.mutation({
+    logoutUser: builder.mutation({
       query: () => ({
         url: "auth/logout",
       }),
+      onQueryStarted,
     }),
   }),
 });
 
 export const {
   useGetUserProfileQuery,
-  useRegisterMutation,
-  useLoginMutation,
-  useLogoutMutation,
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useLogoutUserMutation,
 } = authApi;
