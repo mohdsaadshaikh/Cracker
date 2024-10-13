@@ -1,5 +1,5 @@
-// import { setUnauthenticated } from "../redux/slices/authentication";
 import { toast } from "react-hot-toast";
+import { setUnAuthenticated } from "../redux/slice/auth";
 
 export const onQueryStarted = async (args, { queryFulfilled, dispatch }) => {
   try {
@@ -9,7 +9,7 @@ export const onQueryStarted = async (args, { queryFulfilled, dispatch }) => {
     if (status === 400) {
       toast.error(data?.message);
     } else if (status === 401) {
-      // dispatch(setUnAuthenticated());
+      dispatch(setUnAuthenticated());
     } else if (status === 404) {
       toast.error("Resource not found");
     } else if (status === 500) {

@@ -1,7 +1,7 @@
 import { onQueryStarted } from "../../lib/handleApiErr";
-import { baseApi } from "./baseApi";
+import { apis } from "./baseApi";
 
-export const authApi = baseApi.injectEndpoints({
+export const authApi = apis.injectEndpoints({
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: () => ({
@@ -28,7 +28,7 @@ export const authApi = baseApi.injectEndpoints({
       onQueryStarted,
       invalidatesTags: ["Auth"],
     }),
-    logoutUser: builder.mutation({
+    logoutUser: builder.query({
       query: () => ({
         url: "auth/logout",
       }),
@@ -39,7 +39,7 @@ export const authApi = baseApi.injectEndpoints({
 
 export const {
   useGetUserProfileQuery,
-  useRegisterUserMutation,
   useLoginUserMutation,
-  useLogoutUserMutation,
+  useRegisterUserMutation,
+  useLazyLogoutUserQuery,
 } = authApi;

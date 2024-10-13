@@ -1,14 +1,14 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseURL = import.meta.env.VITE_BASE_URL;
+const baseQuery = fetchBaseQuery({
+  baseUrl: import.meta.env.VITE_BASE_URL,
+  credentials: "include",
+});
 
-export const baseApi = createApi({
-  reducerPath: "baseApi",
-  baseQuery: fetchBaseQuery({
-    baseURL,
-    credentials: "include",
-  }),
-  tagTypes: ["Auth", "Expense"],
+export const apis = createApi({
+  reducerPath: "apis",
+  baseQuery,
+  tagTypes: ["Auth", "Finance"],
   keepUnusedDataFor: 0.01,
   endpoints: () => ({}),
 });
