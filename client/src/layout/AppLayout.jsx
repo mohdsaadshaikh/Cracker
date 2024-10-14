@@ -36,7 +36,7 @@ const AppLayout = () => {
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+    setTheme((prevTheme) => (prevTheme === "light" ? "forest" : "light"));
   };
 
   const logoutHandler = async () => {
@@ -53,17 +53,21 @@ const AppLayout = () => {
 
   return (
     <div className="w-screen h-screen overflow-hidden">
-      <div className="w-full shadow sticky z-50 h-20 flex justify-between items-center">
-        <div className="flex items-center justify-between h-16 px-4 w-full">
+      <div
+        className={`w-full sticky z-50 h-20 flex justify-between items-center border-b ${
+          theme !== "light" ? "border-gray-700" : "border-gray-300"
+        }`}
+      >
+        <nav className="flex items-center justify-between h-16 px-4 w-full">
           <Logo />
           <div className="flex items-center gap-4">
             <ThemeChanger theme={theme} toggleTheme={toggleTheme} />
             <UserAvatar name={userData?.userData?.user.name} />
           </div>
-        </div>
+        </nav>
       </div>
       <div className="w-screen h-[90%] flex overflow-x-auto customized-scrollbar">
-        <SideBar logoutHandler={logoutHandler} />
+        <SideBar logoutHandler={logoutHandler} theme={theme} />
         <Outlet context={theme} />
       </div>
     </div>
@@ -86,7 +90,7 @@ const ThemeChanger = ({ toggleTheme }) => {
   );
 };
 
-const SideBar = ({ logoutHandler }) => {
+const SideBar = ({ logoutHandler, theme }) => {
   const [isOpen, setIsOpen] = useState(false);
   const isDesktop = useMediaQuery({ query: "(min-width: 900px)" });
   const navigate = useNavigate();
@@ -97,14 +101,14 @@ const SideBar = ({ logoutHandler }) => {
 
   const list = [
     {
-      label: "Overview",
+      label: "Dashboard",
       icons: <HomeOutlined />,
-      command: () => navigate("/overview"),
+      command: () => navigate("/"),
     },
     {
       label: "Details",
       icons: <BarChartOutlined />,
-      command: () => navigate("/details"),
+      command: () => navigate("/finances"),
     },
     {
       label: "Add Finance",
@@ -121,8 +125,9 @@ const SideBar = ({ logoutHandler }) => {
   const renderLinks = () => {
     return list.map((list, i) => (
       <div
-        className="py-2 px-4 mb-3 rounded cursor-pointer select-none hover:bg-gray-200 dark:hover:bg-gray-800 text-lg transition-all ease-in-out flex gap-3"
+        className="py-2 px-4 mb-3 rounded cursor-pointer select-none hover:bg-gray-400 dark:hover:bg-gray-800 text-lg transition-all ease-in-out flex gap-3"
         key={i}
+        onClick={list.command}
       >
         <span>{list.icons}</span> {list.label}
       </div>
@@ -132,10 +137,16 @@ const SideBar = ({ logoutHandler }) => {
   return (
     <>
       {isDesktop ? (
-        <div className="w-64 h-full bg-base-100 shadow-lg flex flex-col justify-between">
+        <div
+          className={`w-[300px] h-full bg-base-100 flex flex-col justify-between border-r ${
+            theme !== "light" ? "border-gray-700" : "border-gray-300"
+          }`}
+        >
           <div className="mt-4 p-4">{renderLinks()}</div>
           <div
-            className="text-xl py-4 px-6 mb-3 cursor-pointer flex gap-2 border-t border-gray-400"
+            className={`text-xl py-4 px-6 mb-3 cursor-pointer flex gap-2 border-t ${
+              theme !== "light" ? "border-gray-700" : "border-gray-300"
+            }`}
             onClick={logoutHandler}
           >
             <LoginOutlined />
@@ -161,7 +172,9 @@ const SideBar = ({ logoutHandler }) => {
                 </div>
                 <div className="p-4">{renderLinks()}</div>
                 <div
-                  className="text-xl w-64 py-4 px-6 cursor-pointer flex gap-2 border-t border-gray-400 absolute bottom-0 "
+                  className={`text-xl w-64 py-4 px-6 cursor-pointer flex gap-2 absolute bottom-0 border-t ${
+                    theme !== "light" ? "border-gray-700" : "border-gray-300"
+                  }`}
                   onClick={logoutHandler}
                 >
                   <LoginOutlined />

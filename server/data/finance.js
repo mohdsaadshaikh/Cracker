@@ -217,7 +217,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const userId = "cm20q6ilr000012o3e3qo8an8"; // Tumhara userId
+const userId = "cm27sy5ye0000le1jc9u2zgey"; // Tumhara userId
 const categories = [
   "FOOD",
   "TRAVEL",

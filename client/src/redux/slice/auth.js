@@ -10,9 +10,6 @@ export const Authentication = createSlice({
     setAuthenticated: (state, action) => {
       state.isAuthenticated = true;
       state.userData = action.payload;
-      console.log(state.userData);
-      console.log(action.payload);
-      console.log(state.isAuthenticated);
     },
     setUnAuthenticated: (state) => {
       state.isAuthenticated = false;
