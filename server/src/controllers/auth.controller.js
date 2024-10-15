@@ -59,7 +59,7 @@ const login = asyncHandler(async (req, res, next) => {
 
   res
     .status(201)
-    .cookie("Token", token, cookieOptions)
+    .cookie("Token", token, { ...cookieOptions, domain: 'http://localhost:5173' })
     .json({ success: true, message: "User Loggedin successfully", token });
 });
 
