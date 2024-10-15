@@ -135,7 +135,7 @@ const FinancesTable = () => {
           columnDefs={columnDefs}
           pinnedBottomRowData={pinnedBottomRowData}
           className={gridTheme}
-          onCellContextMenu={onRowContextMenu}
+          contextMenu={onRowContextMenu}
           suppressContextMenu={true}
         />
       </div>
