@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../config/dbConnection.js";
 import { ApiError } from "../utils/ApiError.js";
 import generateToken from "../utils/generateToken.js";
-import { cookieOptions } from "../constants/options.js";
+import { cookieOptions } from "../constants/.js";
 
 const register = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;

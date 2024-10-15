@@ -7,14 +7,14 @@ import { lazy, Suspense, useEffect } from "react";
 import { setAuthenticated } from "./redux/slice/auth";
 import FinancesTable from "./screens/finances/FinanceTable";
 
-const Auth = lazy(() => import("./screens/auth/auth"));
+const Auth = lazy(() => import("./screens/auth/Auth"));
 const DashBoard = lazy(() => import("./screens/dashboard/index"));
 const Error = lazy(() => import("./screens/error/Error"));
 
 const App = () => {
   const { isAuthenticated } = useSelector((state) => state.Authentication);
   const { data, isSuccess, isFetching, isLoading } = useGetUserProfileQuery();
-  // console.log(data?.user);
+  console.log(data);
 
   const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ const App = () => {
     if (isSuccess) {
       dispatch(setAuthenticated({ userData: data }));
     }
-  }, [isFetching, dispatch]);
+  }, [isFetching, dispatch, data, isSuccess]);
 
   const isSomeQueryPending = useSelector(
     (state) =>

@@ -63,7 +63,8 @@ const Auth = () => {
       dispatch(setAuthenticated());
       navigate("/");
     } catch (error) {
-      toast.error(error);
+      console.log(error);
+      toast.error("someThing went wrong");
     }
   };
 

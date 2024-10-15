@@ -9,6 +9,6 @@ export const apis = createApi({
   reducerPath: "apis",
   baseQuery,
   tagTypes: ["Auth", "Finance"],
-  keepUnusedDataFor: 0.01,
+  // keepUnusedDataFor: 0.01,
   endpoints: () => ({}),
 });
