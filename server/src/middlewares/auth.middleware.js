@@ -6,6 +6,7 @@ import asyncHandler from "express-async-handler";
 
 const isAuthenticated = asyncHandler(async (req, res, next) => {
   let token = req.cookies["Token"];
+  console.log(token)
 
   if (!token) {
     return next(new ApiError("Not authenticated", 401));
