@@ -213,11 +213,10 @@
 // }
 
 // createMoreFinances();
-import { PrismaClient } from "@prisma/client";
+import { connectToDB, prisma } from "../src/config/dbConnection.js";
 
-const prisma = new PrismaClient();
-
-const userId = "cm27sy5ye0000le1jc9u2zgey"; // Tumhara userId
+// const userId = "cm27sy5ye0000le1jc9u2zgey";
+const userId = "cm2a9r4b80000j4feshk8aht5";
 const categories = [
   "FOOD",
   "TRAVEL",
@@ -259,13 +258,20 @@ const createFinanceData = () => ({
   recurring: randomBoolean(),
 });
 
+console.log();
+
 async function main() {
-  for (let i = 0; i < 20; i++) {
+  await connectToDB();
+
+  console.log("Using database:", process.env.PROD_DATABASE_URL);
+
+  // Finance record creation logic
+  for (let i = 0; i < 100; i++) {
     await prisma.finances.create({
       data: createFinanceData(),
     });
   }
-  console.log("20 finance records created successfully.");
+  console.log("Finance records created successfully.");
 }
 
 main()

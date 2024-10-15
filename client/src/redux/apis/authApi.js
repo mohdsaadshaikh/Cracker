@@ -28,9 +28,10 @@ export const authApi = apis.injectEndpoints({
       onQueryStarted,
       invalidatesTags: ["Auth"],
     }),
-    logoutUser: builder.query({
+    logoutUser: builder.mutation({
       query: () => ({
         url: "auth/logout",
+        method: "GET",
       }),
       onQueryStarted,
     }),
@@ -41,5 +42,5 @@ export const {
   useGetUserProfileQuery,
   useLoginUserMutation,
   useRegisterUserMutation,
-  useLazyLogoutUserQuery,
+  useLogoutUserMutation,
 } = authApi;

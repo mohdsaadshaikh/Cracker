@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import { prisma } from "../config/dbConnection.js";
 import { ApiError } from "../utils/ApiError.js";
 import generateToken from "../utils/generateToken.js";
-import { cookieOptions } from "../constants/.js";
+import { cookieOptions } from "../constants/options.js";
 
 const register = asyncHandler(async (req, res, next) => {
   const { name, email, password } = req.body;
@@ -64,7 +64,11 @@ const login = asyncHandler(async (req, res, next) => {
 });
 
 const logout = asyncHandler(async (req, res, next) => {
-  res.clearCookie("Token");
+  res.clearCookie("Token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "none",
+  });
   res.json({ success: true, message: "Logged out successfully" });
 });
 

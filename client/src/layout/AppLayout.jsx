@@ -13,7 +13,7 @@ import {
   PlusSquareOutlined,
 } from "@ant-design/icons";
 import { useMediaQuery } from "react-responsive";
-import { useLazyLogoutUserQuery } from "../redux/apis/authApi";
+import { useLogoutUserMutation } from "../redux/apis/authApi";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setUnAuthenticated } from "../redux/slice/auth";
@@ -25,7 +25,7 @@ const AppLayout = () => {
 
   const { userData } = useSelector((state) => state.Authentication);
 
-  const [triggerLogout] = useLazyLogoutUserQuery();
+  const [logoutUser] = useLogoutUserMutation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -41,12 +41,13 @@ const AppLayout = () => {
 
   const logoutHandler = async () => {
     try {
-      await triggerLogout().unwrap();
+      const response = await logoutUser();
+      console.log("Logout response:", response); // Log the response to see what you get
       dispatch(setUnAuthenticated());
       navigate("/");
       toast.success("Successfully logged out!");
     } catch (error) {
-      console.log(error);
+      console.log("Logout Error:", error);
       toast.error("Failed to logout. Please try again.");
     }
   };
