@@ -5,7 +5,7 @@ import cors from "cors";
 import winston from "winston";
 
 import { connectToDB } from "./src/config/dbConnection.js";
-import { corsOpts } from "./src/constants/options.js";
+// import { corsOpts } from "./src/constants/options.js";
 import globalErrorHandler from "./src/middlewares/errHandler.js";
 import authRouter from "./src/routes/auth.routes.js";
 import financeRouter from "./src/routes/finances.routes.js";
@@ -15,7 +15,7 @@ import "./src/jobs/addRecurringFinance.js";
 const app = express();
 const port = process.env.PORT || 6060;
 
-app.use(cors(corsOpts));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

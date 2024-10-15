@@ -54,7 +54,7 @@ const Auth = () => {
     try {
       if (isRegistering) {
         await registerUser(data).unwrap();
-        toast.success("Registration successful! Please log in.");
+        toast.success("Registration successful!");
         setIsRegistering(false);
       } else {
         await loginUser(data).unwrap();
@@ -63,7 +63,9 @@ const Auth = () => {
       dispatch(setAuthenticated());
       navigate("/");
     } catch (error) {
-      toast.error(error);
+      toast.error(
+        error?.data?.message || error?.error || "Something went wrong"
+      );
     }
   };
 

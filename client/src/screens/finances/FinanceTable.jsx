@@ -15,7 +15,8 @@ const FinancesTable = () => {
     type: "",
     recurring: "",
   });
-  // const [pinnedBottomRowData, setPinnedBottomRowData] = useState([]);
+  const [contextMenu, setContextMenu] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
   const { data } = useGetAllFinancesQuery(filters);
   const theme = useOutletContext();
 
@@ -106,6 +107,19 @@ const FinancesTable = () => {
   const gridTheme =
     theme === "forest" ? "ag-theme-alpine-dark" : "ag-theme-alpine";
 
+  const onRowContextMenu = (event) => {
+    event.preventDefault(); // Prevent default context menu
+    console.log("Context menu opened for row:", event.data); // Check event data
+
+    if (event.data) {
+      // Ensure there is data
+      setSelectedRow(event.data);
+      setContextMenu({ x: event.clientX, y: event.clientY });
+    } else {
+      console.warn("No data available for the selected row");
+    }
+  };
+
   return (
     <div className="w-full h-full my-4 mx-6">
       <div className="flex justify-between mb-4">
@@ -121,8 +135,41 @@ const FinancesTable = () => {
           columnDefs={columnDefs}
           pinnedBottomRowData={pinnedBottomRowData}
           className={gridTheme}
+          onCellContextMenu={onRowContextMenu}
+          suppressContextMenu={true}
         />
       </div>
+      {contextMenu && (
+        <div
+          style={{
+            position: "absolute",
+            top: contextMenu.y,
+            left: contextMenu.x,
+            backgroundColor: "white",
+            border: "1px solid #ccc",
+            boxShadow: "2px 2px 5px rgba(0,0,0,0.5)",
+            zIndex: 1000,
+          }}
+          onMouseLeave={() => setContextMenu(null)}
+        >
+          <div
+            style={{ padding: "10px", cursor: "pointer" }}
+            // onClick={handleEdit}
+          >
+            Edit
+          </div>
+          <div
+            style={{
+              padding: "10px",
+              cursor: "pointer",
+              borderTop: "1px solid #ccc",
+            }}
+            // onClick={handleDelete}
+          >
+            Delete
+          </div>
+        </div>
+      )}
     </div>
   );
 };
