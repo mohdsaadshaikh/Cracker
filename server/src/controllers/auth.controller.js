@@ -64,7 +64,11 @@ const login = asyncHandler(async (req, res, next) => {
 });
 
 const logout = asyncHandler(async (req, res, next) => {
-  res.clearCookie("Token");
+  res.clearCookie("Token", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: 'none',
+  });
   res.json({ success: true, message: "Logged out successfully" });
 });
 
