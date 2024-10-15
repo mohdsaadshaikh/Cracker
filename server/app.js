@@ -36,6 +36,8 @@ if (process.env.NODE_ENV !== "production") {
   );
 }
 
+app.options("*", cors(corsOpts)); 
+
 app.use(globalErrorHandler);
 
 app.listen(port, () => {
