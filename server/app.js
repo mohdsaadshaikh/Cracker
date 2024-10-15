@@ -5,7 +5,7 @@ import cors from "cors";
 import winston from "winston";
 
 import { connectToDB } from "./src/config/dbConnection.js";
-import { corsOpts } from "./src/constants/.js";
+import { corsOpts } from "./src/constants/options.js";
 import globalErrorHandler from "./src/middlewares/errHandler.js";
 import authRouter from "./src/routes/auth.routes.js";
 import financeRouter from "./src/routes/finances.routes.js";
