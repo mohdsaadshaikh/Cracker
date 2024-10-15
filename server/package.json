@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "SET NODE_ENV=development & nodemon app.js",
-    "start": "SET NODE_ENV=production & node app.js"
+   "start": "NODE_ENV=production node app.js"
   },
   "keywords": [
     "Cracker",
