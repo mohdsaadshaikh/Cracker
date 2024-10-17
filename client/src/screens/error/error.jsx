@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 const Error = () => {
   const [fadeIn, setFadeIn] = useState(false);
 
-  // Trigger a fade-in animation effect
   useEffect(() => {
     setTimeout(() => setFadeIn(true), 100);
   }, []);

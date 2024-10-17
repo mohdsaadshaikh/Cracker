@@ -17,6 +17,7 @@ import { useLogoutUserMutation } from "../redux/apis/authApi";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { setUnAuthenticated } from "../redux/slice/auth";
+import { getHoverBgTheme } from "../lib/theme";
 
 const AppLayout = () => {
   const [theme, setTheme] = useState(
@@ -126,7 +127,9 @@ const SideBar = ({ logoutHandler, theme }) => {
   const renderLinks = () => {
     return list.map((list, i) => (
       <div
-        className="py-2 px-4 mb-3 rounded cursor-pointer select-none hover:bg-gray-400 dark:hover:bg-gray-800 text-lg transition-all ease-in-out flex gap-3"
+        className={`py-2 px-4 mb-3 rounded cursor-pointer select-none text-lg transition-all ease-in-out flex gap-3 ${getHoverBgTheme(
+          theme
+        )}`}
         key={i}
         onClick={list.command}
       >

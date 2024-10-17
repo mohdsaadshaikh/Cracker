@@ -54,7 +54,7 @@ const Auth = () => {
     try {
       if (isRegistering) {
         await registerUser(data).unwrap();
-        toast.success("Registration successful! Please log in.");
+        toast.success("Registration successful!");
         setIsRegistering(false);
       } else {
         await loginUser(data).unwrap();
@@ -64,7 +64,7 @@ const Auth = () => {
       navigate("/");
     } catch (error) {
       console.log(error);
-      toast.error("someThing went wrong");
+      toast.error(error?.data?.message || "someThing went wrong");
     }
   };
 

@@ -9,7 +9,29 @@ export const financeApis = apis.injectEndpoints({
       onQueryStarted,
       providesTags: ["Finance"],
     }),
+    createFinance: builder.mutation({
+      query: (finance) => ({
+        url: "finances",
+        method: "POST",
+        body: finance,
+      }),
+      onQueryStarted,
+      providesTags: ["Finance"],
+    }),
+    updateFinance: builder.mutation({
+      query: (finance) => ({
+        url: `finances/${finance.id}`,
+        method: "PATCH",
+        body: finance,
+      }),
+      onQueryStarted,
+      providesTags: ["Finance"],
+    }),
   }),
 });
 
-export const { useGetAllFinancesQuery } = financeApis;
+export const {
+  useGetAllFinancesQuery,
+  useCreateFinanceMutation,
+  useUpdateFinanceMutation,
+} = financeApis;

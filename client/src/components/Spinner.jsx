@@ -1,6 +1,6 @@
 const Spinner = () => {
   return (
-    <div className="card w-[100vw] h-[100vh] overflow-hidden flex justify-center items-center">
+    <div className="card w-[90vw] h-[100vh] flex justify-center items-center">
       <span className="loading loading-bars loading-lg"></span>
     </div>
   );
