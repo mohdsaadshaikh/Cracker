@@ -11,9 +11,7 @@ const PasswordInput = ({ register, errors }) => {
   return (
     <div className="form-control w-full">
       <label className="label">
-        <span className="label-text text-sm mb-2 dark:text-white">
-          Password
-        </span>
+        <span className="label-text text-base dark:text-white">Password</span>
       </label>
 
       <div className="relative">

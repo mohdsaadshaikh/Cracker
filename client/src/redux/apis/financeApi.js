@@ -16,16 +16,24 @@ export const financeApis = apis.injectEndpoints({
         body: finance,
       }),
       onQueryStarted,
-      providesTags: ["Finance"],
+      invalidatesTags: ["Finance"],
     }),
     updateFinance: builder.mutation({
-      query: (finance) => ({
-        url: `finances/${finance.id}`,
+      query: ({ id, finance }) => ({
+        url: `finances/${id}`,
         method: "PATCH",
         body: finance,
       }),
       onQueryStarted,
-      providesTags: ["Finance"],
+      invalidatesTags: ["Finance"],
+    }),
+    deleteFinance: builder.mutation({
+      query: (id) => ({
+        url: `finances/${id}`,
+        method: "DELETE",
+      }),
+      onQueryStarted,
+      invalidatesTags: ["Finance"],
     }),
   }),
 });
@@ -34,4 +42,5 @@ export const {
   useGetAllFinancesQuery,
   useCreateFinanceMutation,
   useUpdateFinanceMutation,
+  useDeleteFinanceMutation,
 } = financeApis;

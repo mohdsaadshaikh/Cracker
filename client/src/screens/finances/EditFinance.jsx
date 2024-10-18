@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useCreateFinanceMutation } from "../../redux/apis/financeApi";
+import { useUpdateFinanceMutation } from "../../redux/apis/financeApi";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -10,8 +10,9 @@ import {
   PAYMENT_METHOD,
 } from "../../utils/filteringConstants";
 import Input from "../../components/Input";
+import { useEffect } from "react";
 
-const createFinanceSchema = yup.object().shape({
+const updateFinanceSchema = yup.object().shape({
   description: yup.string().required("Description is required"),
   amount: yup.number().required("Amount is required"),
   category: yup.string().required("Category is required"),
@@ -20,22 +21,37 @@ const createFinanceSchema = yup.object().shape({
   recurring: yup.boolean(),
 });
 
-const AddFinance = ({ setOpenModal, refetch }) => {
-  const [createFinance, { isLoading: isAdding }] = useCreateFinanceMutation();
+const EditFinance = ({ setOpenModal, refetch, data }) => {
+  const [updateFinance, { isLoading: isEditing }] = useUpdateFinanceMutation();
   const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(createFinanceSchema),
+    resolver: yupResolver(updateFinanceSchema),
   });
 
-  const onSubmit = async (data) => {
+  console.log(data);
+
+  useEffect(() => {
+    setValue("description", data.description);
+    setValue("amount", data.amount);
+    setValue("category", data.category);
+    setValue("paymentMethod", data.paymentMethod);
+    setValue("type", data.type);
+    setValue("recurring", data.recurring);
+  }, [setValue, data]);
+
+  const onSubmit = async (finance) => {
     try {
-      await createFinance(data).unwrap();
-      toast.success("Finance added successfully");
+      await updateFinance({
+        id: data.id,
+        finance,
+      }).unwrap();
+      toast.success("Finance edifted successfully");
       setOpenModal(false);
       refetch();
       navigate("/finances");
@@ -147,9 +163,9 @@ const AddFinance = ({ setOpenModal, refetch }) => {
           <button
             type="submit"
             className={`btn bg-[#a66dd4] hover:bg-[#000000] text-white transition-all duration-300 w-full `}
-            disabled={isAdding}
+            disabled={isEditing}
           >
-            {isAdding ? "Adding..." : "Add Finance"}
+            {isEditing ? "Editing..." : "Edit Finance"}
           </button>
         </div>
       </form>
@@ -157,4 +173,4 @@ const AddFinance = ({ setOpenModal, refetch }) => {
   );
 };
 
-export default AddFinance;
+export default EditFinance;

@@ -2,7 +2,10 @@ import { useState, useEffect, useMemo } from "react";
 import { AgGridReact } from "ag-grid-react";
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-alpine.css";
-import { useGetAllFinancesQuery } from "../../redux/apis/financeApi";
+import {
+  useDeleteFinanceMutation,
+  useGetAllFinancesQuery,
+} from "../../redux/apis/financeApi";
 import { Link, useOutletContext } from "react-router-dom";
 import { formatDate } from "../../utils/formatDate";
 import TableHeader from "../../components/TableHeader";
@@ -11,6 +14,8 @@ import { getHoverBgTheme } from "../../lib/theme";
 import FinanceDetail from "./FinanceDetail";
 import AddFinance from "./AddFinance";
 import Modal from "../../components/Modal";
+import toast from "react-hot-toast";
+import EditFinance from "./EditFinance";
 
 const FinancesTable = () => {
   const [rowData, setRowData] = useState([]);
@@ -27,6 +32,7 @@ const FinancesTable = () => {
   const [modalType, setModalType] = useState(null);
 
   const { data, refetch } = useGetAllFinancesQuery(filters);
+  const [deleteFinance] = useDeleteFinanceMutation();
   const theme = useOutletContext();
 
   const columnDefs = [
@@ -140,13 +146,26 @@ const FinancesTable = () => {
   }, [contextMenuPosition]);
 
   const handleEdit = () => {
-    alert("Edit: " + JSON.stringify(selectedRow));
     setContextMenuPosition(null);
+    setModalType("edit");
+    setOpenModal(true);
   };
 
-  const handleDelete = () => {
-    alert("Delete: " + JSON.stringify(selectedRow));
+  const deleteConfirmation = () => {
     setContextMenuPosition(null);
+    setModalType("delete");
+    setOpenModal(true);
+  };
+
+  const handleDelete = async () => {
+    try {
+      await deleteFinance(selectedRow.id);
+      setOpenModal(false);
+      toast.success("Deleted successfully");
+      refetch();
+    } catch (error) {
+      toast.error("Failed to delete. Please try again later.");
+    }
   };
 
   const handleView = () => {
@@ -208,7 +227,7 @@ const FinancesTable = () => {
               className={`pl-4 pr-12 py-2 cursor-pointer flex items-center gap-3 ${getHoverBgTheme(
                 theme
               )}`}
-              onClick={handleDelete}
+              onClick={handleEdit}
             >
               <EditOutlined />
               <span>Edit</span>
@@ -217,7 +236,7 @@ const FinancesTable = () => {
               className={`pl-4 pr-12 py-2 cursor-pointer flex items-center gap-3 ${getHoverBgTheme(
                 theme
               )}`}
-              onClick={handleDelete}
+              onClick={deleteConfirmation}
             >
               <DeleteOutlined />
               <span>Delete</span>
@@ -233,6 +252,43 @@ const FinancesTable = () => {
             case "add":
               return (
                 <AddFinance setOpenModal={setOpenModal} refetch={refetch} />
+              );
+            case "edit":
+              return (
+                <EditFinance
+                  data={selectedRow}
+                  setOpenModal={setOpenModal}
+                  refetch={refetch}
+                />
+              );
+            case "delete":
+              return (
+                // <div className="py-4  text-center">
+                //   <h2 className="text-lg font-semibold mb-4">
+                //     Are you sure you want to delete this record?
+                //   </h2>
+                //   <div className="flex justify-center gap-4">
+                //   </div>
+                // </div>
+                <>
+                  <h2 className="text-lg font-semibold mb-12">
+                    Are you sure you want to delete this record?
+                  </h2>
+                  <div className="modal-action">
+                    <button
+                      onClick={handleDelete}
+                      className="btn btn-error px-6 text-white"
+                    >
+                      Yes
+                    </button>
+                    <button
+                      onClick={() => setOpenModal(false)}
+                      className="btn btn-outline btn-neutral px-6 "
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
               );
             default:
               return null;
