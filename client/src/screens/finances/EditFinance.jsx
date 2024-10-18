@@ -51,8 +51,8 @@ const EditFinance = ({ setOpenModal, refetch, data }) => {
         id: data.id,
         finance,
       }).unwrap();
-      toast.success("Finance edifted successfully");
       setOpenModal(false);
+      toast.success("Finance edited successfully");
       refetch();
       navigate("/finances");
     } catch (error) {
