@@ -1,3 +1,5 @@
+![Cracker](https://res.cloudinary.com/dhd52zju0/image/upload/v1729354982/cracker-app-Screenshot_yduhv7.png)
+
 # CRACKER - Finance Tracker App
 
 ## Technologies Used
