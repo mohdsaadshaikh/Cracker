@@ -14,7 +14,6 @@ import PasswordInput from "../../components/PasswordInput";
 import Input from "../../components/Input";
 import { setAuthenticated } from "../../redux/slice/auth";
 
-// Validation Schemas
 const loginSchema = yup.object().shape({
   email: yup.string().email("Invalid email").required("Email is required"),
   password: yup
@@ -102,7 +101,7 @@ const Auth = () => {
           <button
             type="submit"
             // className="btn btn-primary w-full text-lg text-white"
-            className={`btn btn-primary w-full text-lg text-white
+            className={`btn bg-[#a66dd4] w-full text-lg text-white
                ${
                  isRegistering
                    ? isRegisteringUser

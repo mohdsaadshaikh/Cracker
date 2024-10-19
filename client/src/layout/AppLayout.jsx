@@ -115,12 +115,12 @@ const SideBar = ({ logoutHandler, theme }) => {
     {
       label: "Add Finance",
       icons: <PlusSquareOutlined />,
-      command: () => navigate("/create"),
+      command: () => navigate("/finances"),
     },
     {
       label: "Edit Finance",
       icons: <EditOutlined />,
-      command: () => navigate("/edit-finance"),
+      command: () => navigate("/finances"),
     },
   ];
 

@@ -263,13 +263,6 @@ const FinancesTable = () => {
               );
             case "delete":
               return (
-                // <div className="py-4  text-center">
-                //   <h2 className="text-lg font-semibold mb-4">
-                //     Are you sure you want to delete this record?
-                //   </h2>
-                //   <div className="flex justify-center gap-4">
-                //   </div>
-                // </div>
                 <>
                   <h2 className="text-lg font-semibold mb-12">
                     Are you sure you want to delete this record?

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const InfoCard = ({ title, value, detailsText, bgColor }) => {
   return (
     <div
@@ -5,7 +7,9 @@ const InfoCard = ({ title, value, detailsText, bgColor }) => {
     >
       <h2 className="text-lg rubik-font">{title}</h2>
       <span className="font-bold text-4xl rubik-font">${value}</span>
-      <span className="cursor-pointer hover:underline">{detailsText}</span>
+      <Link to="/finances">
+        <span className="cursor-pointer hover:underline">{detailsText}</span>
+      </Link>
     </div>
   );
 };

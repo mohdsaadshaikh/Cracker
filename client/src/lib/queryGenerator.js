@@ -1,4 +1,4 @@
-const queryGenerator = (url, filters) => {
+const queryGenerator = (url, filters = {}) => {
   let modifiedUrl = url;
   let flag = false;
 
