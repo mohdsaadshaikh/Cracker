@@ -1,5 +1,5 @@
 export const corsOpts = {
-  origin: ["https://cracker.up.railway.app", "http://localhost:5173", "http://localhost:6060"],
+  origin: ["https://cracker.up.railway.app", "http://localhost:5173", "http://localhost:6060", "https://cracker-app.netlify.app"],
   credentials: true,
 };
 
